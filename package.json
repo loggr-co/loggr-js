@@ -1,0 +1,29 @@
+{
+    "name": "loggr-js",
+    "version": "0.0.2",
+    "description": "Loggr Javascript SDK",
+    "author": "Loggr",
+    "license": "MIT",
+    "main": "dist/loggr.js",
+    "scripts": {
+        "clean": "shx rm -rf dist lib lib-esm",
+        "watch": "yarn dev --watch &",
+        "dev": "yarn clean && webpack --mode development --progress --color --display-error-details",
+        "build": "yarn clean && tsc && tsc -m es6 --outDir lib-esm && NODE_ENV=development webpack && NODE_ENV=production webpack",
+        "publish": "npm publish"
+    },
+    "devDependencies": {
+        "@types/isomorphic-fetch": "^0.0.35",
+        "@types/node": "^12.6.8",
+        "prettier": "^1.18.2",
+        "shx": "^0.3.2",
+        "ts-loader": "^6.0.4",
+        "typescript": "^3.5.3",
+        "uglifyjs-webpack-plugin": "^2.2.0",
+        "webpack": "^4.36.1",
+        "webpack-cli": "^3.3.6"
+    },
+    "dependencies": {
+        "isomorphic-fetch": "^2.2.1"
+    }
+}

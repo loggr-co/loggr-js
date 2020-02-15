@@ -22,12 +22,13 @@ export default class Loggr {
             level: level || 'INFO'
         }
 
-        console.log('isBrowser', isBrowser(), `${this.host}/api/log`, fetch)
+        console.log('LOGGR-JS: isBrowser', isBrowser(), `${this.host}/api/log`, fetch)
 
         fetch(`${this.host}/api/log`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'loggr-api-key': this.apiKey
             },
             body: JSON.stringify({
                 meta,
@@ -35,8 +36,8 @@ export default class Loggr {
             })
         })
             .then(res => res.json())
-            .then(json => console.log('Loggr: Successful to log', json))
-            .catch(error => console.log('Loggr: Failed to log', error))
+            .then(json => console.log('LOGGR-JS: Successful to log', json))
+            .catch(error => console.log('LOGGR-JS: Failed to log', error))
     }
 
     info = line => {

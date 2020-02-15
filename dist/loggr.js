@@ -2226,17 +2226,18 @@ var Loggr = /** @class */ (function () {
                 app: _this.app,
                 level: level || 'INFO'
             };
-            console.log('isBrowser', isBrowser(), _this.host + "/api/log", fetch_1.default);
+            console.log('LOGGR-JS: isBrowser', isBrowser(), _this.host + "/api/log", fetch_1.default);
             fetch_1.default(_this.host + "/api/log", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'loggr-api-key': _this.apiKey
                 },
                 body: JSON.stringify(__assign({ meta: meta }, line))
             })
                 .then(function (res) { return res.json(); })
-                .then(function (json) { return console.log('Loggr: Successful to log', json); })
-                .catch(function (error) { return console.log('Loggr: Failed to log', error); });
+                .then(function (json) { return console.log('LOGGR-JS: Successful to log', json); })
+                .catch(function (error) { return console.log('LOGGR-JS: Failed to log', error); });
         };
         this.info = function (line) {
             _this.log('INFO', line);

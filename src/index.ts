@@ -1,5 +1,9 @@
 import fetch from '@brillout/fetch'
 
+function isBrowser() {
+    return typeof window !== 'undefined'
+}
+
 export default class Loggr {
     private readonly host: string
     private readonly apiKey: string
@@ -18,6 +22,8 @@ export default class Loggr {
             level: level || 'INFO'
         }
 
+        console.log('isBrowser', isBrowser(), `${this.host}/api/log`, fetch)
+
         fetch(`${this.host}/api/log`, {
             method: 'POST',
             headers: {
@@ -28,7 +34,8 @@ export default class Loggr {
                 ...line
             })
         })
-            .then()
+            .then(res => res.json())
+            .then(json => console.log('Loggr: Successful to log', json))
             .catch(error => console.log('Loggr: Failed to log', error))
     }
 

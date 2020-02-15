@@ -2214,6 +2214,9 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fetch_1 = __webpack_require__(/*! @brillout/fetch */ "../node_modules/@brillout/fetch/index.js");
+function isBrowser() {
+    return typeof window !== 'undefined';
+}
 var Loggr = /** @class */ (function () {
     function Loggr(options) {
         var _this = this;
@@ -2223,6 +2226,7 @@ var Loggr = /** @class */ (function () {
                 app: _this.app,
                 level: level || 'INFO'
             };
+            console.log('isBrowser', isBrowser(), _this.host + "/api/log", fetch_1.default);
             fetch_1.default(_this.host + "/api/log", {
                 method: 'POST',
                 headers: {
@@ -2230,7 +2234,8 @@ var Loggr = /** @class */ (function () {
                 },
                 body: JSON.stringify(__assign({ meta: meta }, line))
             })
-                .then()
+                .then(function (res) { return res.json(); })
+                .then(function (json) { return console.log('Loggr: Successful to log', json); })
                 .catch(function (error) { return console.log('Loggr: Failed to log', error); });
         };
         this.info = function (line) {

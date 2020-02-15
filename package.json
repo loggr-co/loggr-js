@@ -24,6 +24,6 @@
         "webpack-cli": "^3.3.6"
     },
     "dependencies": {
-        "superagent": "^5.2.1"
+        "@brillout/fetch": "^0.2.1"
     }
 }

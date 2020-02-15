@@ -1,4 +1,4 @@
-import superagent from 'superagent'
+import fetch from '@brillout/fetch'
 
 export default class Loggr {
     private readonly host: string
@@ -18,13 +18,16 @@ export default class Loggr {
             level: level || 'INFO'
         }
 
-        superagent
-            .post(`${this.host}/api/log`)
-            .send({
+        fetch(`${this.host}/api/log`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
                 meta,
                 ...line
             })
-            .set('Content-Type', 'application/json')
+        })
             .then()
             .catch(error => console.log('Loggr: Failed to log', error))
     }

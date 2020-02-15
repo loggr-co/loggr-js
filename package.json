@@ -10,7 +10,7 @@
         "watch": "yarn dev --watch &",
         "dev": "yarn clean && webpack --mode development --progress --color --display-error-details",
         "build-old": "yarn clean && tsc && tsc -m es6 --outDir lib-esm && NODE_ENV=development webpack && NODE_ENV=production webpack",
-        "build": "yarn clean && NODE_ENV=production webpack",
+        "build": "yarn clean && NODE_ENV=development webpack && NODE_ENV=production webpack",
         "publish": "npm publish"
     },
     "devDependencies": {

@@ -9,7 +9,8 @@
         "clean": "shx rm -rf dist lib lib-esm",
         "watch": "yarn dev --watch &",
         "dev": "yarn clean && webpack --mode development --progress --color --display-error-details",
-        "build": "yarn clean && tsc && tsc -m es6 --outDir lib-esm && NODE_ENV=development webpack && NODE_ENV=production webpack",
+        "build-old": "yarn clean && tsc && tsc -m es6 --outDir lib-esm && NODE_ENV=development webpack && NODE_ENV=production webpack",
+        "build": "yarn clean && NODE_ENV=production webpack",
         "publish": "npm publish"
     },
     "devDependencies": {
@@ -23,6 +24,6 @@
         "webpack-cli": "^3.3.6"
     },
     "dependencies": {
-        "isomorphic-unfetch": "^3.0.0"
+        "superagent": "^5.2.1"
     }
 }

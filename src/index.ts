@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-unfetch'
+import superagent from 'superagent'
 
 export default class Loggr {
     private readonly host: string
@@ -17,16 +17,14 @@ export default class Loggr {
             app: this.app,
             level: level || 'INFO'
         }
-        fetch(`${this.host}/api/log`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+
+        superagent
+            .post(`${this.host}/api/log`)
+            .send({
                 meta,
                 ...line
             })
-        })
+            .set('Content-Type', 'application/json')
             .then()
             .catch(error => console.log('Loggr: Failed to log', error))
     }

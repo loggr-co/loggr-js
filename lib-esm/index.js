@@ -9,7 +9,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import * as fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-unfetch';
 var Loggr = /** @class */ (function () {
     function Loggr(options) {
         var _this = this;

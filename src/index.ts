@@ -1,7 +1,4 @@
-import { polyfill } from 'es6-promise'
-polyfill()
-
-import * as fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-unfetch'
 
 export default class Loggr {
     private readonly host: string

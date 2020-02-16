@@ -16,11 +16,14 @@ export default class Loggr {
     private readonly host: string
     private readonly apiKey: string
     private readonly app: string
+    private readonly mode: string
 
     constructor(options) {
+        let mode = options.mode || 'production'
         this.host = options.host
         this.apiKey = options.apiKey
         this.app = options.app
+        this.mode = mode.toUpperCase()
     }
 
     log = (level, line) => {
@@ -35,6 +38,7 @@ export default class Loggr {
         }
 
         request(`${this.host}/api/log`, {
+            rejectUnauthorized: this.mode === 'PRODUCTION' ? true : false,
             mode: 'no-cors',
             method: 'POST',
             headers: {

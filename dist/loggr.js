@@ -2237,6 +2237,7 @@ var Loggr = /** @class */ (function () {
                 level: level || 'INFO'
             };
             request(_this.host + "/api/log", {
+                rejectUnauthorized: _this.mode === 'PRODUCTION' ? true : false,
                 mode: 'no-cors',
                 method: 'POST',
                 headers: {
@@ -2267,9 +2268,11 @@ var Loggr = /** @class */ (function () {
         this.critical = function (line) {
             _this.log('CRITICAL', line);
         };
+        var mode = options.mode || 'production';
         this.host = options.host;
         this.apiKey = options.apiKey;
         this.app = options.app;
+        this.mode = mode.toUpperCase();
     }
     return Loggr;
 }());

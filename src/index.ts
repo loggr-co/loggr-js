@@ -19,7 +19,7 @@ export default class Loggr {
     private readonly mode: string
 
     constructor(options) {
-        let mode = options.mode || 'production'
+        let mode = options.mode || 'PRODUCTION'
         this.host = options.host
         this.apiKey = options.apiKey
         this.app = options.app
@@ -29,7 +29,12 @@ export default class Loggr {
     log = (level, line) => {
         const request = getRequest()
 
-        console.log('LOGGR-JS: isBrowser', isBrowser(), `${this.host}/api/log`, request ? 'Fetch Available' : 'No Request Available')
+        console.log('LOGGR-JS: isBrowser', {
+            isBrowser: isBrowser(),
+            url: `${this.host}/api/log`,
+            fetch: request ? 'Fetch Available' : 'No Request Available',
+            mode: this.mode
+        })
 
         const meta = {
             at: Date.now(),

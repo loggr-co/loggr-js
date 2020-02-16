@@ -2230,7 +2230,12 @@ var Loggr = /** @class */ (function () {
         var _this = this;
         this.log = function (level, line) {
             var request = getRequest();
-            console.log('LOGGR-JS: isBrowser', isBrowser(), _this.host + "/api/log", request ? 'Fetch Available' : 'No Request Available');
+            console.log('LOGGR-JS: isBrowser', {
+                isBrowser: isBrowser(),
+                url: _this.host + "/api/log",
+                fetch: request ? 'Fetch Available' : 'No Request Available',
+                mode: _this.mode
+            });
             var meta = {
                 at: Date.now(),
                 app: _this.app,
@@ -2268,7 +2273,7 @@ var Loggr = /** @class */ (function () {
         this.critical = function (line) {
             _this.log('CRITICAL', line);
         };
-        var mode = options.mode || 'production';
+        var mode = options.mode || 'PRODUCTION';
         this.host = options.host;
         this.apiKey = options.apiKey;
         this.app = options.app;

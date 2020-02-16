@@ -26,7 +26,7 @@ export default class Loggr {
     log = (level, line) => {
         const request = getRequest()
 
-        console.log('LOGGR-JS: isBrowser', isBrowser(), `${this.host}/api/log`, request)
+        console.log('LOGGR-JS: isBrowser', isBrowser(), `${this.host}/api/log`, request ? 'Request' : 'No Request')
 
         const meta = {
             at: Date.now(),

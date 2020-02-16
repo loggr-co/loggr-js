@@ -2217,17 +2217,26 @@ var fetch_1 = __webpack_require__(/*! @brillout/fetch */ "../node_modules/@brill
 function isBrowser() {
     return typeof window !== 'undefined';
 }
+var getRequest = function () {
+    if (isBrowser()) {
+        return window.fetch.bind(window);
+    }
+    else {
+        return fetch_1.default;
+    }
+};
 var Loggr = /** @class */ (function () {
     function Loggr(options) {
         var _this = this;
         this.log = function (level, line) {
+            var request = getRequest();
+            console.log('LOGGR-JS: isBrowser', isBrowser(), _this.host + "/api/log", request);
             var meta = {
                 at: Date.now(),
                 app: _this.app,
                 level: level || 'INFO'
             };
-            console.log('LOGGR-JS: isBrowser', isBrowser(), _this.host + "/api/log", fetch_1.default);
-            fetch_1.default(_this.host + "/api/log", {
+            request(_this.host + "/api/log", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

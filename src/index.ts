@@ -4,6 +4,14 @@ function isBrowser() {
     return typeof window !== 'undefined'
 }
 
+const getRequest = () => {
+    if (isBrowser()) {
+        return window.fetch.bind(window)
+    } else {
+        return fetch
+    }
+}
+
 export default class Loggr {
     private readonly host: string
     private readonly apiKey: string
@@ -16,15 +24,17 @@ export default class Loggr {
     }
 
     log = (level, line) => {
+        const request = getRequest()
+
+        console.log('LOGGR-JS: isBrowser', isBrowser(), `${this.host}/api/log`, request)
+
         const meta = {
             at: Date.now(),
             app: this.app,
             level: level || 'INFO'
         }
 
-        console.log('LOGGR-JS: isBrowser', isBrowser(), `${this.host}/api/log`, fetch)
-
-        fetch(`${this.host}/api/log`, {
+        request(`${this.host}/api/log`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -35,6 +35,7 @@ export default class Loggr {
         }
 
         request(`${this.host}/api/log`, {
+            mode: 'no-cors',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -2237,6 +2237,7 @@ var Loggr = /** @class */ (function () {
                 level: level || 'INFO'
             };
             request(_this.host + "/api/log", {
+                mode: 'no-cors',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -2230,7 +2230,7 @@ var Loggr = /** @class */ (function () {
         var _this = this;
         this.log = function (level, line) {
             var request = getRequest();
-            console.log('LOGGR-JS: isBrowser', isBrowser(), _this.host + "/api/log", request ? 'Request' : 'No Request');
+            console.log('LOGGR-JS: isBrowser', isBrowser(), _this.host + "/api/log", request ? 'Fetch Available' : 'No Request Available');
             var meta = {
                 at: Date.now(),
                 app: _this.app,

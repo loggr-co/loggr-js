@@ -99,6 +99,10 @@ export default class Loggr {
         this.log('SEVERE', line)
     }
 
+    success = line => {
+        this.log('SUCCESS', line)
+    }
+
     trace = line => {
         this.log('TRACE', line)
     }

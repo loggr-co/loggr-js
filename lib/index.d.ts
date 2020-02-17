@@ -14,6 +14,7 @@ export default class Loggr {
     fatal: (line: any) => void;
     info: (line: any) => void;
     severe: (line: any) => void;
+    success: (line: any) => void;
     trace: (line: any) => void;
     warn: (line: any) => void;
 }

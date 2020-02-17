@@ -2284,6 +2284,9 @@ var Loggr = /** @class */ (function () {
         this.severe = function (line) {
             _this.log('SEVERE', line);
         };
+        this.success = function (line) {
+            _this.log('SUCCESS', line);
+        };
         this.trace = function (line) {
             _this.log('TRACE', line);
         };

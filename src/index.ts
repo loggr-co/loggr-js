@@ -32,12 +32,17 @@ export default class Loggr {
     log = (level, line) => {
         const request = getRequest()
 
-        console.log('LOGGR-JS: isBrowser', {
-            isBrowser: isBrowser(),
-            url: `${this.domain}/api/log`,
-            fetch: request ? 'Fetch Available' : 'No Request Available',
-            apiKey: this.apiKey
-        })
+        if (this.debugMode) {
+            console.log('LOGGR-JS: isBrowser', {
+                ignoreSSLError: this.ignoreSSLError,
+                isBrowser: isBrowser(),
+                host: this.host,
+                domain: this.domain,
+                url: `${this.domain}/api/log`,
+                fetch: request ? 'Fetch Available' : 'No Request Available',
+                apiKey: this.apiKey
+            })
+        }
 
         const meta = {
             at: Date.now(),

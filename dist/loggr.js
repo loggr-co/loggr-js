@@ -2230,12 +2230,17 @@ var Loggr = /** @class */ (function () {
         var _this = this;
         this.log = function (level, line) {
             var request = getRequest();
-            console.log('LOGGR-JS: isBrowser', {
-                isBrowser: isBrowser(),
-                url: _this.domain + "/api/log",
-                fetch: request ? 'Fetch Available' : 'No Request Available',
-                apiKey: _this.apiKey
-            });
+            if (_this.debugMode) {
+                console.log('LOGGR-JS: isBrowser', {
+                    ignoreSSLError: _this.ignoreSSLError,
+                    isBrowser: isBrowser(),
+                    host: _this.host,
+                    domain: _this.domain,
+                    url: _this.domain + "/api/log",
+                    fetch: request ? 'Fetch Available' : 'No Request Available',
+                    apiKey: _this.apiKey
+                });
+            }
             var meta = {
                 at: Date.now(),
                 app: _this.app,

@@ -33,7 +33,8 @@ export default class Loggr {
             isBrowser: isBrowser(),
             url: `${this.host}/api/log`,
             fetch: request ? 'Fetch Available' : 'No Request Available',
-            mode: this.mode
+            mode: this.mode,
+            apiKey: this.apiKey
         })
 
         const meta = {
@@ -43,8 +44,7 @@ export default class Loggr {
         }
 
         request(`${this.host}/api/log`, {
-            rejectUnauthorized: this.mode === 'PRODUCTION' ? true : false,
-            mode: 'no-cors',
+            // rejectUnauthorized: this.mode === 'PRODUCTION' ? true : false,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

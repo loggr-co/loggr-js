@@ -2234,7 +2234,8 @@ var Loggr = /** @class */ (function () {
                 isBrowser: isBrowser(),
                 url: _this.host + "/api/log",
                 fetch: request ? 'Fetch Available' : 'No Request Available',
-                mode: _this.mode
+                mode: _this.mode,
+                apiKey: _this.apiKey
             });
             var meta = {
                 at: Date.now(),
@@ -2242,8 +2243,7 @@ var Loggr = /** @class */ (function () {
                 level: level || 'INFO'
             };
             request(_this.host + "/api/log", {
-                rejectUnauthorized: _this.mode === 'PRODUCTION' ? true : false,
-                mode: 'no-cors',
+                // rejectUnauthorized: this.mode === 'PRODUCTION' ? true : false,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

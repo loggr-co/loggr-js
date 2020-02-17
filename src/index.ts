@@ -13,17 +13,20 @@ const getRequest = () => {
 }
 
 export default class Loggr {
+    private readonly ignoreSSLError: boolean
+    private readonly debugMode: boolean
     private readonly host: string
     private readonly apiKey: string
     private readonly app: string
-    private readonly mode: string
+    private readonly domain: string
 
     constructor(options) {
-        let mode = options.mode || 'PRODUCTION'
+        this.ignoreSSLError = options.ignoreSSLError ? options.ignoreSSLError : false
+        this.debugMode = options.debugMode ? options.debugMode : false
         this.host = options.host
         this.apiKey = options.apiKey
         this.app = options.app
-        this.mode = mode.toUpperCase()
+        this.domain = this.host.includes('localhost:') ? `http://${this.host}` : `https://${this.host}`
     }
 
     log = (level, line) => {
@@ -31,9 +34,8 @@ export default class Loggr {
 
         console.log('LOGGR-JS: isBrowser', {
             isBrowser: isBrowser(),
-            url: `${this.host}/api/log`,
+            url: `${this.domain}/api/log`,
             fetch: request ? 'Fetch Available' : 'No Request Available',
-            mode: this.mode,
             apiKey: this.apiKey
         })
 
@@ -43,8 +45,8 @@ export default class Loggr {
             level: level || 'INFO'
         }
 
-        request(`${this.host}/api/log`, {
-            // rejectUnauthorized: this.mode === 'PRODUCTION' ? true : false,
+        request(`${this.domain}/api/log`, {
+            rejectUnauthorized: this.ignoreSSLError,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,8 +58,12 @@ export default class Loggr {
             })
         })
             .then(res => res.json())
-            .then(json => console.log('LOGGR-JS: Successful to log', json))
-            .catch(error => console.log('LOGGR-JS: Failed to log', error))
+            .then(json => {
+                if (this.debugMode) {
+                    console.log('LOGGR-JS: Successful to log', json)
+                }
+            })
+            .catch(error => console.log('Loggr: Failed to log', error))
     }
 
     info = line => {

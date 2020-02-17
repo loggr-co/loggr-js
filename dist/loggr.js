@@ -2232,9 +2232,8 @@ var Loggr = /** @class */ (function () {
             var request = getRequest();
             console.log('LOGGR-JS: isBrowser', {
                 isBrowser: isBrowser(),
-                url: _this.host + "/api/log",
+                url: _this.domain + "/api/log",
                 fetch: request ? 'Fetch Available' : 'No Request Available',
-                mode: _this.mode,
                 apiKey: _this.apiKey
             });
             var meta = {
@@ -2242,8 +2241,8 @@ var Loggr = /** @class */ (function () {
                 app: _this.app,
                 level: level || 'INFO'
             };
-            request(_this.host + "/api/log", {
-                // rejectUnauthorized: this.mode === 'PRODUCTION' ? true : false,
+            request(_this.domain + "/api/log", {
+                rejectUnauthorized: _this.ignoreSSLError,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2252,8 +2251,12 @@ var Loggr = /** @class */ (function () {
                 body: JSON.stringify(__assign({ meta: meta }, line))
             })
                 .then(function (res) { return res.json(); })
-                .then(function (json) { return console.log('LOGGR-JS: Successful to log', json); })
-                .catch(function (error) { return console.log('LOGGR-JS: Failed to log', error); });
+                .then(function (json) {
+                if (_this.debugMode) {
+                    console.log('LOGGR-JS: Successful to log', json);
+                }
+            })
+                .catch(function (error) { return console.log('Loggr: Failed to log', error); });
         };
         this.info = function (line) {
             _this.log('INFO', line);
@@ -2273,11 +2276,12 @@ var Loggr = /** @class */ (function () {
         this.critical = function (line) {
             _this.log('CRITICAL', line);
         };
-        var mode = options.mode || 'PRODUCTION';
+        this.ignoreSSLError = options.ignoreSSLError ? options.ignoreSSLError : false;
+        this.debugMode = options.debugMode ? options.debugMode : false;
         this.host = options.host;
         this.apiKey = options.apiKey;
         this.app = options.app;
-        this.mode = mode.toUpperCase();
+        this.domain = this.host.includes('localhost:') ? "http://" + this.host : "https://" + this.host;
     }
     return Loggr;
 }());

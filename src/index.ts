@@ -71,27 +71,39 @@ export default class Loggr {
             .catch(error => console.log('Loggr: Failed to log', error))
     }
 
-    info = line => {
-        this.log('INFO', line)
-    }
-
-    warn = line => {
-        this.log('WARN', line)
+    critical = line => {
+        this.log('CRITICAL', line)
     }
 
     debug = line => {
         this.log('DEBUG', line)
     }
 
+    emergency = line => {
+        this.log('EMERGENCY', line)
+    }
+
     error = line => {
         this.log('ERROR', line)
     }
 
-    success = line => {
-        this.log('SUCCESS', line)
+    fatal = line => {
+        this.log('FATAL', line)
     }
 
-    critical = line => {
-        this.log('CRITICAL', line)
+    info = line => {
+        this.log('INFO', line)
+    }
+
+    severe = line => {
+        this.log('SEVERE', line)
+    }
+
+    trace = line => {
+        this.log('TRACE', line)
+    }
+
+    warn = line => {
+        this.log('WARN', line)
     }
 }

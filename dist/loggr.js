@@ -2263,23 +2263,32 @@ var Loggr = /** @class */ (function () {
             })
                 .catch(function (error) { return console.log('Loggr: Failed to log', error); });
         };
-        this.info = function (line) {
-            _this.log('INFO', line);
-        };
-        this.warn = function (line) {
-            _this.log('WARN', line);
+        this.critical = function (line) {
+            _this.log('CRITICAL', line);
         };
         this.debug = function (line) {
             _this.log('DEBUG', line);
         };
+        this.emergency = function (line) {
+            _this.log('EMERGENCY', line);
+        };
         this.error = function (line) {
             _this.log('ERROR', line);
         };
-        this.success = function (line) {
-            _this.log('SUCCESS', line);
+        this.fatal = function (line) {
+            _this.log('FATAL', line);
         };
-        this.critical = function (line) {
-            _this.log('CRITICAL', line);
+        this.info = function (line) {
+            _this.log('INFO', line);
+        };
+        this.severe = function (line) {
+            _this.log('SEVERE', line);
+        };
+        this.trace = function (line) {
+            _this.log('TRACE', line);
+        };
+        this.warn = function (line) {
+            _this.log('WARN', line);
         };
         this.ignoreSSLError = options.ignoreSSLError ? options.ignoreSSLError : false;
         this.debugMode = options.debugMode ? options.debugMode : false;

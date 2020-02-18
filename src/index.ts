@@ -15,7 +15,7 @@ const getRequest = () => {
 const now = unit => {
     console.log('process', process)
 
-    const hrTime = process.hrtime()
+    const hrTime = process.hrtime.bigint()
 
     switch (unit) {
         case 'milli':

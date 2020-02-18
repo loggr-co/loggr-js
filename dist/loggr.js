@@ -2227,7 +2227,7 @@ var getRequest = function () {
 };
 var now = function (unit) {
     console.log('process', process);
-    var hrTime = process.hrtime();
+    var hrTime = process.hrtime.bigint();
     switch (unit) {
         case 'milli':
             return hrTime[0] * 1000 + hrTime[1] / 1000000;

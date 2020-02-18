@@ -2286,6 +2286,7 @@ var hrtime = function (previousTimestamp) {
 var time = process.hrtime || hrtime;
 var now = function (unit) {
     console.log('process', process);
+    debugger;
     // @ts-ignore
     var hrTime = time();
     switch (unit) {

@@ -46,6 +46,7 @@ const time = process.hrtime || hrtime
 
 const now = unit => {
     console.log('process', process)
+    debugger
 
     // @ts-ignore
     const hrTime = time()

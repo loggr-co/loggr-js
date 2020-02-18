@@ -2367,6 +2367,7 @@ var Loggr = /** @class */ (function () {
         this.warn = function (line) {
             _this.log('WARN', line);
         };
+        console.log(options);
         this.ignoreSSLError = options.ignoreSSLError ? options.ignoreSSLError : false;
         this.debugMode = options.debugMode ? options.debugMode : false;
         this.host = options.host;

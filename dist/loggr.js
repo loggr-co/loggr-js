@@ -2192,6 +2192,37 @@ exports.callbackify = callbackify;
 
 /***/ }),
 
+/***/ "../node_modules/webpack/buildin/global.js":
+/*!*************************************************!*\
+  !*** ../node_modules/webpack/buildin/global.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
 /***/ "./index.ts":
 /*!******************!*\
   !*** ./index.ts ***!
@@ -2200,7 +2231,7 @@ exports.callbackify = callbackify;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
+/* WEBPACK VAR INJECTION */(function(global, process) {
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -2225,9 +2256,38 @@ var getRequest = function () {
         return fetch_1.default;
     }
 };
+// polyfil for window.performance.now
+// @ts-ignore
+var performance = global.performance || {};
+var performanceNow = performance.now ||
+    performance.mozNow ||
+    performance.msNow ||
+    performance.oNow ||
+    performance.webkitNow ||
+    function () {
+        return new Date().getTime();
+    };
+// generate timestamp or delta
+// see http://nodejs.org/api/process.html#process_process_hrtime
+var hrtime = function (previousTimestamp) {
+    var clocktime = performanceNow.call(performance) * 1e-3;
+    var seconds = Math.floor(clocktime);
+    var nanoseconds = Math.floor((clocktime % 1) * 1e9);
+    if (previousTimestamp) {
+        seconds = seconds - previousTimestamp[0];
+        nanoseconds = nanoseconds - previousTimestamp[1];
+        if (nanoseconds < 0) {
+            seconds--;
+            nanoseconds += 1e9;
+        }
+    }
+    return [seconds, nanoseconds];
+};
+var time = process.hrtime || hrtime;
 var now = function (unit) {
     console.log('process', process);
-    var hrTime = process.hrtime.bigint();
+    // @ts-ignore
+    var hrTime = time();
     switch (unit) {
         case 'milli':
             return hrTime[0] * 1000 + hrTime[1] / 1000000;
@@ -2318,7 +2378,7 @@ var Loggr = /** @class */ (function () {
 }());
 exports.default = Loggr;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/process/browser.js */ "../node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ "../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../node_modules/process/browser.js */ "../node_modules/process/browser.js")))
 
 /***/ })
 

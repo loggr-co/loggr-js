@@ -74,7 +74,7 @@ export default class Loggr {
     private readonly domain: string
 
     constructor(options) {
-        console.log(options)
+        console.log('options', options)
         this.ignoreSSLError = options.ignoreSSLError ? options.ignoreSSLError : false
         this.debugMode = options.debugMode ? options.debugMode : false
         this.host = options.host
@@ -105,7 +105,7 @@ export default class Loggr {
         }
 
         request(`${this.domain}/api/log`, {
-            rejectUnauthorized: this.ignoreSSLError,
+            rejectUnauthorized: !this.ignoreSSLError,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

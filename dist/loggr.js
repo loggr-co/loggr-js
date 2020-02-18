@@ -2321,7 +2321,7 @@ var Loggr = /** @class */ (function () {
                 level: level || 'INFO'
             };
             request(_this.domain + "/api/log", {
-                rejectUnauthorized: _this.ignoreSSLError,
+                rejectUnauthorized: !_this.ignoreSSLError,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -2367,7 +2367,7 @@ var Loggr = /** @class */ (function () {
         this.warn = function (line) {
             _this.log('WARN', line);
         };
-        console.log(options);
+        console.log('options', options);
         this.ignoreSSLError = options.ignoreSSLError ? options.ignoreSSLError : false;
         this.debugMode = options.debugMode ? options.debugMode : false;
         this.host = options.host;

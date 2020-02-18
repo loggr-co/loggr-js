@@ -12,6 +12,24 @@ const getRequest = () => {
     }
 }
 
+const now = unit => {
+    const hrTime = process.hrtime()
+
+    switch (unit) {
+        case 'milli':
+            return hrTime[0] * 1000 + hrTime[1] / 1000000
+
+        case 'micro':
+            return hrTime[0] * 1000000 + hrTime[1] / 1000
+
+        case 'nano':
+            return hrTime[0] * 1000000000 + hrTime[1]
+
+        default:
+            return now('nano')
+    }
+}
+
 export default class Loggr {
     private readonly ignoreSSLError: boolean
     private readonly debugMode: boolean
@@ -45,7 +63,7 @@ export default class Loggr {
         }
 
         const meta = {
-            at: Date.now(),
+            at: now('nano'), // Date.now(),
             app: this.app,
             level: level || 'INFO'
         }

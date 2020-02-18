@@ -2200,7 +2200,7 @@ exports.callbackify = callbackify;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(process) {
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -2225,6 +2225,19 @@ var getRequest = function () {
         return fetch_1.default;
     }
 };
+var now = function (unit) {
+    var hrTime = process.hrtime();
+    switch (unit) {
+        case 'milli':
+            return hrTime[0] * 1000 + hrTime[1] / 1000000;
+        case 'micro':
+            return hrTime[0] * 1000000 + hrTime[1] / 1000;
+        case 'nano':
+            return hrTime[0] * 1000000000 + hrTime[1];
+        default:
+            return now('nano');
+    }
+};
 var Loggr = /** @class */ (function () {
     function Loggr(options) {
         var _this = this;
@@ -2242,7 +2255,7 @@ var Loggr = /** @class */ (function () {
                 });
             }
             var meta = {
-                at: Date.now(),
+                at: now('nano'),
                 app: _this.app,
                 level: level || 'INFO'
             };
@@ -2304,6 +2317,7 @@ var Loggr = /** @class */ (function () {
 }());
 exports.default = Loggr;
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/process/browser.js */ "../node_modules/process/browser.js")))
 
 /***/ })
 

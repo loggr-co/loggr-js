@@ -13,6 +13,8 @@ const getRequest = () => {
 }
 
 const now = unit => {
+    console.log('process', process)
+
     const hrTime = process.hrtime()
 
     switch (unit) {

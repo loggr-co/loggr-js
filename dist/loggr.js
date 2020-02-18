@@ -2226,6 +2226,7 @@ var getRequest = function () {
     }
 };
 var now = function (unit) {
+    console.log('process', process);
     var hrTime = process.hrtime();
     switch (unit) {
         case 'milli':

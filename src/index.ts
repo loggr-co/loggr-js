@@ -12,60 +12,6 @@ const getRequest = () => {
     }
 }
 
-// polyfil for window.performance.now
-// @ts-ignore
-const performance = global.performance || {}
-const performanceNow =
-    performance.now ||
-    performance.mozNow ||
-    performance.msNow ||
-    performance.oNow ||
-    performance.webkitNow ||
-    function() {
-        return new Date().getTime()
-    }
-
-// generate timestamp or delta
-// see http://nodejs.org/api/process.html#process_process_hrtime
-const hrtime = previousTimestamp => {
-    let clocktime = performanceNow.call(performance) * 1e-3
-    let seconds = Math.floor(clocktime)
-    let nanoseconds = Math.floor((clocktime % 1) * 1e9)
-    if (previousTimestamp) {
-        seconds = seconds - previousTimestamp[0]
-        nanoseconds = nanoseconds - previousTimestamp[1]
-        if (nanoseconds < 0) {
-            seconds--
-            nanoseconds += 1e9
-        }
-    }
-    return [seconds, nanoseconds]
-}
-
-const time = process.hrtime || hrtime
-
-const now = unit => {
-    console.log('process', process)
-    debugger
-
-    // @ts-ignore
-    const hrTime = time()
-
-    switch (unit) {
-        case 'milli':
-            return hrTime[0] * 1000 + hrTime[1] / 1000000
-
-        case 'micro':
-            return hrTime[0] * 1000000 + hrTime[1] / 1000
-
-        case 'nano':
-            return hrTime[0] * 1000000000 + hrTime[1]
-
-        default:
-            return now('nano')
-    }
-}
-
 export default class Loggr {
     private readonly ignoreSSLError: boolean
     private readonly debugMode: boolean
@@ -75,7 +21,6 @@ export default class Loggr {
     private readonly domain: string
 
     constructor(options) {
-        console.log('options', options)
         this.ignoreSSLError = options.ignoreSSLError ? options.ignoreSSLError : false
         this.debugMode = options.debugMode ? options.debugMode : false
         this.host = options.host
@@ -100,7 +45,7 @@ export default class Loggr {
         }
 
         const meta = {
-            at: now('nano'), // Date.now(),
+            at: Date.now(),
             app: this.app,
             level: level || 'INFO'
         }
